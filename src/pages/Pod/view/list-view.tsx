@@ -40,6 +40,7 @@ import ProductTableToolbar from '../product-table-toolbar';
 import ProductTableFiltersResult from '../product-table-filters-result';
 import { IProductTableFilters, IProductTableFilterValue } from '../type';
 import { RenderCellStatus, RenderCellNsName, RenderCellIsReady } from '../product-table-row';
+import { useSettingsContext } from 'src/components/settings';
 
 // ----------------------------------------------------------------------
 
@@ -68,7 +69,7 @@ export default function ProductListView() {
 
   const router = useRouter();
 
-  // const settings = useSettingsContext()
+  const settings = useSettingsContext();
 
   const { namespaceName, deploymentName } = useParams();
 
@@ -267,8 +268,8 @@ export default function ProductListView() {
   return (
     <>
       <Container
-        // maxWidth={settings.themeStretch ? false : 'lg'}
-        maxWidth="xl"
+        maxWidth={settings.themeStretch ? false : 'lg'}
+        // maxWidth="xl"
         sx={{
           flexGrow: 1,
           display: 'flex',

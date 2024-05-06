@@ -1,6 +1,9 @@
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
+import Autocomplete from '@mui/material/Autocomplete';
+
 import { useTheme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 
@@ -8,6 +11,7 @@ import { useOffSetTop } from 'src/hooks/use-off-set-top';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { bgBlur } from 'src/theme/css';
+import { useCombinedStore } from 'src/store';
 
 import Logo from 'src/components/logo';
 import SvgColor from 'src/components/svg-color';
@@ -17,9 +21,12 @@ import Searchbar from '../common/searchbar';
 import { NAV, HEADER } from '../config-layout';
 import SettingsButton from '../common/settings-button';
 import AccountPopover from '../common/account-popover';
-import ContactsPopover from '../common/contacts-popover';
-import LanguagePopover from '../common/language-popover';
+// import ContactsPopover from '../common/contacts-popover';
+// import LanguagePopover from '../common/language-popover';
 import NotificationsPopover from '../common/notifications-popover';
+import { useGetNamespaces } from 'src/api/namespace';
+import { useCallback, useMemo } from 'react';
+import TextField from '@mui/material/TextField';
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +38,8 @@ export default function Header({ onOpenNav }: Props) {
   const theme = useTheme();
 
   const settings = useSettingsContext();
+  const { namespace, updateNamespace } = useCombinedStore();
+  const { namespaces } = useGetNamespaces();
 
   const isNavHorizontal = settings.themeLayout === 'horizontal';
 
@@ -41,6 +50,19 @@ export default function Header({ onOpenNav }: Props) {
   const offset = useOffSetTop(HEADER.H_DESKTOP);
 
   const offsetTop = offset && !isNavHorizontal;
+
+  const getoptions = useMemo(
+    () => namespaces.map((item: string) => ({ label: item, id: item })),
+    [namespaces]
+  );
+
+  const changeNamespace = useCallback(
+    (namespace: string) => {
+      console.log('🚀 ~ Header ~ namespace:', namespace);
+      updateNamespace(namespace);
+    },
+    [updateNamespace]
+  );
 
   const renderContent = (
     <>
@@ -54,6 +76,31 @@ export default function Header({ onOpenNav }: Props) {
 
       <Searchbar />
 
+      <Box sx={{ flexGrow: 1, display: 'flex', marginLeft: 8 }}>
+        <Autocomplete
+          size="small"
+          disablePortal
+          // default value
+          value={namespace !== '' ? { label: namespace, id: namespace } : null}
+          id="combo-box-demo"
+          options={getoptions}
+          isOptionEqualToValue={(option, value) => option?.id === value?.id}
+          onChange={(event, newValue) => {
+            console.log('🚀 ~ Header ~ newValue:', newValue);
+
+            if (newValue) {
+              changeNamespace(newValue?.label);
+            } else {
+              changeNamespace('');
+            }
+          }}
+          // clear
+
+          sx={{ width: 260 }}
+          renderInput={(params) => <TextField {...params} label="namespace" />}
+        />
+      </Box>
+
       <Stack
         flexGrow={1}
         direction="row"
@@ -61,11 +108,11 @@ export default function Header({ onOpenNav }: Props) {
         justifyContent="flex-end"
         spacing={{ xs: 0.5, sm: 1 }}
       >
-        <LanguagePopover />
+        {/* <LanguagePopover /> */}
 
         <NotificationsPopover />
 
-        <ContactsPopover />
+        {/* <ContactsPopover /> */}
 
         <SettingsButton />
 

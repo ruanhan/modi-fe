@@ -33,6 +33,7 @@ import Iconify from 'src/components/iconify';
 // import Scrollbar from 'src/components/scrollbar';
 import EmptyContent from 'src/components/empty-content';
 import { ConfirmDialog } from 'src/components/custom-dialog';
+import { useSettingsContext } from 'src/components/settings';
 // import { useSettingsContext } from 'src/components/settings'
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
@@ -75,7 +76,7 @@ export default function ProductListView() {
   const router = useRouter();
   const { namespace } = useCombinedStore();
 
-  // const settings = useSettingsContext()
+  const settings = useSettingsContext();
 
   const { deployments } = useGetDeployments({
     ns: namespace,
@@ -266,8 +267,8 @@ export default function ProductListView() {
   return (
     <>
       <Container
-        // maxWidth={settings.themeStretch ? false : 'lg'}
-        maxWidth="xl"
+        maxWidth={settings.themeStretch ? false : 'lg'}
+        // maxWidth="xl"
         sx={{
           flexGrow: 1,
           display: 'flex',

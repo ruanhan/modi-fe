@@ -39,6 +39,7 @@ import { RenderCellNsName } from './product-table-row';
 import ProductTableToolbar from './product-table-toolbar';
 import ProductTableFiltersResult from './product-table-filters-result';
 import { IProductTableFilters, IProductTableFilterValue } from '../type';
+import { useSettingsContext } from 'src/components/settings';
 
 // ----------------------------------------------------------------------
 
@@ -66,7 +67,7 @@ export default function SecretListView() {
   const router = useRouter();
   const { namespace } = useCombinedStore();
 
-  // const settings = useSettingsContext()
+  const settings = useSettingsContext();
 
   const { secrets } = useGetSecrets({
     ns: namespace,
@@ -223,8 +224,8 @@ export default function SecretListView() {
   return (
     <>
       <Container
-        // maxWidth={settings.themeStretch ? false : 'lg'}
-        maxWidth="xl"
+        maxWidth={settings.themeStretch ? false : 'lg'}
+        // maxWidth="xl"
         sx={{
           flexGrow: 1,
           display: 'flex',
