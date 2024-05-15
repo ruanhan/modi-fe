@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
-import { APP_TOKEN, BASE_API_URL } from 'src/globalConstants';
+import { APP_TOKEN, BASE_API_URL } from 'src/configs/globalConstants';
 
 // import { BASE_API_URL, APP_TOKEN } from '@/globalConstants'
 const baseURL = BASE_API_URL;
@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       removeToken();
-      window.location.href = '/#/login';
+      window.location.href = '/auth/jwt/login';
     }
     return Promise.reject(error);
   }

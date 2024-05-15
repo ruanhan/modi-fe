@@ -49,6 +49,7 @@ import {
   RenderCellStatus,
   RenderCellNsName,
 } from '../product-table-row';
+import { DEFAULTPAGINATIONPAGESIZE } from 'src/configs/appConf';
 
 // ----------------------------------------------------------------------
 
@@ -74,7 +75,7 @@ export default function ProductListView() {
   const confirmRows = useBoolean();
 
   const router = useRouter();
-  const { namespace } = useCombinedStore();
+  const { namespace, updateNamespace } = useCombinedStore();
 
   const settings = useSettingsContext();
 
@@ -142,9 +143,12 @@ export default function ProductListView() {
 
   const toPod = useCallback(
     (name: string, ns: string) => () => {
+      if (ns && ns.length) {
+        updateNamespace(ns);
+      }
       router.push(`/pod/${ns}/${name}`);
     },
-    [router]
+    [router, updateNamespace]
   );
 
   const columns: GridColDef[] = [
@@ -278,11 +282,11 @@ export default function ProductListView() {
         <CustomBreadcrumbs
           heading="List"
           links={[
-            { name: 'Dashboard', href: paths.dashboard.root },
-            {
-              name: 'Product',
-              href: paths.dashboard.product.root,
-            },
+            { name: 'Deployment', href: paths.dashboard.root },
+            // {
+            //   name: 'Product',
+            //   href: paths.dashboard.product.root,
+            // },
             { name: 'List' },
           ]}
           action={
@@ -322,7 +326,7 @@ export default function ProductListView() {
             pageSizeOptions={[5, 10, 25]}
             initialState={{
               pagination: {
-                paginationModel: { pageSize: 10 },
+                paginationModel: { pageSize: DEFAULTPAGINATIONPAGESIZE },
               },
             }}
             onRowSelectionModelChange={(newSelectionModel) => {

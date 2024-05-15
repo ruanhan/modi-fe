@@ -41,6 +41,7 @@ import ProductTableFiltersResult from '../product-table-filters-result';
 import { IProductTableFilters, IProductTableFilterValue } from '../type';
 import { RenderCellStatus, RenderCellNsName, RenderCellIsReady } from '../product-table-row';
 import { useSettingsContext } from 'src/components/settings';
+import { DEFAULTPAGINATIONPAGESIZE } from 'src/configs/appConf';
 
 // ----------------------------------------------------------------------
 
@@ -147,7 +148,7 @@ export default function ProductListView() {
       headerName: 'Name',
       flex: 1,
       // minWidth: 160,
-      maxWidth: 260,
+      maxWidth: 360,
       hideable: false,
       renderCell: (params) => <RenderCellNsName params={params} />,
     },
@@ -279,14 +280,17 @@ export default function ProductListView() {
         <CustomBreadcrumbs
           heading="List"
           links={[
-            { name: 'Dashboard', href: paths.dashboard.root },
-            {
-              name: 'Product',
-              href: paths.dashboard.product.root,
-            },
+            { name: 'Pod', href: paths.dashboard.root },
+            // {
+            //   name: 'Product',
+            //   href: paths.dashboard.product.root,
+            // },
             { name: 'List' },
           ]}
-          action={<ScaleButtons handleClick={scaleDep} count={pods?.length} />}
+          action={
+            namespaceName &&
+            deploymentName && <ScaleButtons handleClick={scaleDep} count={pods?.length} />
+          }
           sx={{
             mb: {
               xs: 3,
@@ -314,7 +318,7 @@ export default function ProductListView() {
             pageSizeOptions={[5, 10, 25]}
             initialState={{
               pagination: {
-                paginationModel: { pageSize: 10 },
+                paginationModel: { pageSize: DEFAULTPAGINATIONPAGESIZE },
               },
             }}
             onRowSelectionModelChange={(newSelectionModel) => {

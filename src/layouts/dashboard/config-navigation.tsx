@@ -80,7 +80,7 @@ export function useNavData() {
       // },
 
       {
-        subheader: 'Kind',
+        subheader: 'Workload',
         items: [
           { title: 'Dashboard', path: '/', icon: ICONS.dashboard },
           { title: 'Deployment', path: '/deployment', icon: ICONS.folder },

@@ -6,7 +6,7 @@ import { useRouter } from 'src/routes/hooks';
 import { SplashScreen } from 'src/components/loading-screen';
 
 import { useAuthContext } from '../hooks';
-import { APP_TOKEN } from 'src/globalConstants';
+import { APP_TOKEN } from 'src/configs/globalConstants';
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +26,7 @@ function Container({ children }: Props) {
 
   const check = useCallback(() => {
     const app_token = localStorage.getItem(APP_TOKEN);
+    // todo 后续补充登录时，再解开
     if (!(app_token && app_token.length)) {
       const searchParams = new URLSearchParams({
         returnTo: window.location.pathname,
@@ -36,8 +37,6 @@ function Container({ children }: Props) {
       const href = `${loginPath}?${searchParams}`;
 
       router.replace(href);
-
-      // router.replace('/login');
     }
   }, [method, router]);
 

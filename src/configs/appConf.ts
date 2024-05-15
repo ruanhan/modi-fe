@@ -1,0 +1,1 @@
+export const DEFAULTPAGINATIONPAGESIZE = 25;

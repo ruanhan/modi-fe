@@ -40,6 +40,7 @@ import ProductTableToolbar from './product-table-toolbar';
 import ProductTableFiltersResult from './product-table-filters-result';
 import { IProductTableFilters, IProductTableFilterValue } from '../type';
 import { useSettingsContext } from 'src/components/settings';
+import { DEFAULTPAGINATIONPAGESIZE } from 'src/configs/appConf';
 
 // ----------------------------------------------------------------------
 
@@ -273,7 +274,7 @@ export default function SecretListView() {
             pageSizeOptions={[5, 10, 25]}
             initialState={{
               pagination: {
-                paginationModel: { pageSize: 10 },
+                paginationModel: { pageSize: DEFAULTPAGINATIONPAGESIZE },
               },
             }}
             onRowSelectionModelChange={(newSelectionModel) => {

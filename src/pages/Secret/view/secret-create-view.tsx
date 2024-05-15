@@ -1,19 +1,18 @@
-import Container from '@mui/material/Container'
+import Container from '@mui/material/Container';
 
-import { paths } from 'src/routes/paths'
+import { paths } from 'src/routes/paths';
 
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs'
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import InvoiceNewEditForm from './invoice-new-edit-form'
+import InvoiceNewEditForm from './invoice-new-edit-form';
+import { useSettingsContext } from 'src/components/settings';
 
 // ----------------------------------------------------------------------
 
 export default function InvoiceCreateView() {
+  const settings = useSettingsContext();
   return (
-    <Container
-      // maxWidth={'lg'}
-      maxWidth="xl"
-    >
+    <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
         heading="Create a new secret"
         links={[
@@ -32,5 +31,5 @@ export default function InvoiceCreateView() {
 
       <InvoiceNewEditForm />
     </Container>
-  )
+  );
 }
