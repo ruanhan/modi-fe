@@ -4,7 +4,7 @@ import { grey, primary } from '../palette';
 
 // ----------------------------------------------------------------------
 
-type PresetType = 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red';
+type PresetType = 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red' | 'grayish';
 
 export function createPresets(preset: PresetType) {
   const primaryColor = getPrimary(preset);
@@ -70,6 +70,15 @@ const red = {
   contrastText: '#FFFFFF',
 };
 
+const grayish = {
+  lighter: '#D9DCF5',
+  light: '#8B92D1',
+  main: '#4F5B92',
+  dark: '#2E3764',
+  darker: '#151A35',
+  contrastText: '#FFFFFF',
+};
+
 export const presetOptions = [
   { name: 'default', value: primary.main },
   { name: 'cyan', value: cyan.main },
@@ -77,6 +86,7 @@ export const presetOptions = [
   { name: 'blue', value: blue.main },
   { name: 'orange', value: orange.main },
   { name: 'red', value: red.main },
+  { name: 'grayish', value: grayish.main },
 ];
 
 export function getPrimary(preset: PresetType) {
@@ -87,5 +97,6 @@ export function getPrimary(preset: PresetType) {
     blue,
     orange,
     red,
+    grayish,
   }[preset];
 }

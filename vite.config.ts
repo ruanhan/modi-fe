@@ -38,7 +38,7 @@ export default defineConfig({
     open: true,
     proxy: {
       '/modi': {
-        target: 'http://localhost:8888',
+        target: 'http://localhost:8887',
         changeOrigin: true,
         secure: false,
       },
