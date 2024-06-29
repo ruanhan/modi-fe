@@ -146,7 +146,8 @@ export default function ProductListView() {
       if (ns && ns.length) {
         updateNamespace(ns);
       }
-      router.push(`/pod/${ns}/${name}`);
+      // router.push(`/pod/${ns}/${name}`);
+      router.push(`/deployment/info/${ns}/${name}`);
     },
     [router, updateNamespace]
   );
@@ -338,12 +339,12 @@ export default function ProductListView() {
               toolbar: () => (
                 <>
                   <GridToolbarContainer>
-                    <ProductTableToolbar
+                    {/* <ProductTableToolbar
                       filters={filters}
                       onFilters={handleFilters}
                       stockOptions={PRODUCT_STOCK_OPTIONS}
                       publishOptions={PUBLISH_OPTIONS}
-                    />
+                    /> */}
 
                     <GridToolbarQuickFilter />
 

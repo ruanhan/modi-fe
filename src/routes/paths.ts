@@ -4,6 +4,7 @@ const ROOTS = {
   AUTH: '/auth',
   DASHBOARD: '/dashboard',
   SECRET: '/secret',
+  POD: '/pod',
 };
 
 // ----------------------------------------------------------------------
@@ -20,6 +21,10 @@ export const paths = {
   secret: {
     root: ROOTS.SECRET,
     new: `${ROOTS.SECRET}/new`,
+  },
+  pod: {
+    root: ROOTS.POD,
+    log: (namespace: string, pname: string) => `${ROOTS.POD}/logs/${namespace}/${pname}`,
   },
   // DASHBOARD
   dashboard: {

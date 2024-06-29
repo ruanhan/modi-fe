@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { Children, lazy, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { AuthGuard } from 'src/auth/guard';
@@ -21,6 +21,7 @@ export const ProductsPage = lazy(() => import('src/pages/Products'));
 export const ProjectsPage = lazy(() => import('src/pages/Projects'));
 export const DeploymentPage = lazy(() => import('src/pages/Deployment'));
 export const PodPage = lazy(() => import('src/pages/Pod'));
+export const PodLog = lazy(() => import('src/pages/Pod/log'));
 export const Secret = lazy(() => import('src/pages/Secret'));
 export const SecretNew = lazy(() => import('src/pages/Secret/new'));
 
@@ -46,7 +47,21 @@ export const dashboardRoutes = [
       },
       {
         path: 'deployment',
-        element: <DeploymentPage />,
+        // element: <DeploymentPage />,
+        children: [
+          {
+            index: true,
+            element: <DeploymentPage />,
+          },
+          {
+            path: 'list',
+            element: <DeploymentPage />,
+          },
+          {
+            path: 'info/:namespaceName/:deploymentName',
+            element: <PodPage />,
+          },
+        ],
       },
       {
         path: 'pod/:namespaceName/:deploymentName',
@@ -55,6 +70,10 @@ export const dashboardRoutes = [
       {
         path: 'pod',
         element: <PodPage />,
+      },
+      {
+        path: 'pod/logs/:namespace/:pname',
+        element: <PodLog />,
       },
       {
         path: 'secret',

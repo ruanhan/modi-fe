@@ -34,6 +34,56 @@ export const useGetDeployments = (params: any) => {
   return memoizedValue;
 };
 
+export const useGetPodContainers = (params: { ns: string; pname: string }) => {
+  const URL = params
+    ? [
+        '/pod/containers',
+        {
+          params,
+        },
+      ]
+    : '/pod/containers';
+
+  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
+
+  const memoizedValue = useMemo(
+    () => ({
+      containers: data?.result || '',
+      containersLoading: isLoading,
+      containersError: error,
+      containersValidating: isValidating,
+      containersEmpty: !isLoading && !data?.result.length,
+    }),
+    [data?.result, error, isLoading, isValidating]
+  );
+  return memoizedValue;
+};
+
+export const useGetPodLogs = (params: { ns: string; pname: string; cname: string }) => {
+  const URL = params
+    ? [
+        '/pod/logs',
+        {
+          params,
+        },
+      ]
+    : '/pod/logs';
+
+  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
+
+  const memoizedValue = useMemo(
+    () => ({
+      logs: data?.result || '',
+      logsLoading: isLoading,
+      logsError: error,
+      logsValidating: isValidating,
+      logsEmpty: !isLoading && !data?.result.length,
+    }),
+    [data?.result, error, isLoading, isValidating]
+  );
+  return memoizedValue;
+};
+
 export const useGetPods = (params: { ns: string; deployment: string }) => {
   const URL = params
     ? [
@@ -44,9 +94,7 @@ export const useGetPods = (params: { ns: string; deployment: string }) => {
       ]
     : '/pods';
 
-  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher, {
-    refreshInterval: 10000,
-  });
+  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
 
   const memoizedValue = useMemo(
     () => ({

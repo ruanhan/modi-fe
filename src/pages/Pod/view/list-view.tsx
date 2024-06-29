@@ -130,6 +130,15 @@ export default function ProductListView() {
     // router.push(paths.dashboard.product.edit(id))
   }, []);
 
+  const handleShowLog = useCallback(
+    (name: string) => {
+      console.log('🚀 ~ ProductListView ~ name:', name);
+
+      router.push(paths.pod.log(namespace, name));
+    },
+    [namespace, router]
+  );
+
   const handleViewRow = useCallback(
     (id: string) => {
       router.push(paths.dashboard.product.details(id));
@@ -237,15 +246,14 @@ export default function ProductListView() {
           label="Edit"
           onClick={() => handleEditRow(params.row.Name)}
         />,
-        // <GridActionsCellItem
-        //   showInMenu
-        //   icon={<Iconify icon="solar:trash-bin-trash-bold" />}
-        //   label="Delete"
-        //   onClick={() => {
-        //     handleDeleteRow(params.row.id)
-        //   }}
-        //   sx={{ color: 'error.main' }}
-        // />,
+        <GridActionsCellItem
+          showInMenu
+          icon={<Iconify icon="solar:trash-bin-trash-bold" />}
+          label="Show Log"
+          onClick={() => {
+            handleShowLog(params.row.Name);
+          }}
+        />,
       ],
     },
   ];

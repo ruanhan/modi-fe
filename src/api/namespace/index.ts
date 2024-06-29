@@ -6,7 +6,7 @@ import { fetcher } from 'src/utils/axios';
 export function useGetNamespaces() {
   const URL = '/ns';
   const { data, isLoading, error, isValidating } = useSWR(URL, fetcher, {
-    refreshInterval: 10000,
+    refreshInterval: 100000,
   });
 
   const memoizedValue = useMemo(
